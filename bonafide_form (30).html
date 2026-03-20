@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<title>બોનાફાઈડ પ્રમાણપત્ર - શ્રી બક્ષીપંચ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #c9942a;
+  --gold-light: #f0d080;
+  --gold-dark: #8a6010;
+  --deep-blue: #0d1b4e;
+  --royal-blue: #1a3480;
+  --cream: #fdf8ee;
+  --cream-dark: #f5edd5;
+  --green: #1a5c2a;
+  --purple: #5c1a7a;
+  --red: #8b1a1a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1a3480 0%, #0d1b4e 50%, #1a5c2a 100%);
+  min-height: 100vh;
+}
+
+/* ══ NAVBAR ══ */
+.navbar {
+  background: linear-gradient(90deg, var(--deep-blue), var(--royal-blue));
+  color: #fff; padding: 13px 24px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 3px 15px rgba(0,0,0,0.5);
+  border-bottom: 2px solid var(--gold);
+}
+.navbar h1 { font-size: 17px; font-weight: 800; }
+.navbar p  { font-size: 11.5px; opacity: .8; }
+
+/* ══ TABS ══ */
+.tabs { display: flex; background: var(--deep-blue); border-bottom: 2px solid var(--gold); }
+.tab {
+  flex: 1; padding: 13px; text-align: center;
+  font-size: 14px; font-weight: 700; color: #aab; cursor: pointer; transition: all .2s;
+}
+.tab.active { background: var(--gold); color: var(--deep-blue); }
+.tab:hover:not(.active) { background: rgba(201,148,42,0.15); color: var(--gold-light); }
+
+.section { display: none; padding: 22px; }
+.section.active { display: block; }
+
+/* ══ FORM CARD ══ */
+.form-card {
+  background: rgba(255,255,255,0.97); border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  padding: 28px; max-width: 720px; margin: 0 auto;
+  border: 1px solid rgba(201,148,42,0.3);
+}
+.form-card h2 {
+  font-size: 16px; font-weight: 800; color: #fff;
+  background: linear-gradient(90deg, var(--deep-blue), var(--royal-blue));
+  padding: 10px 16px; border-radius: 8px;
+  margin-bottom: 20px; border-left: 4px solid var(--gold);
+}
+.sec-div {
+  font-size: 13px; font-weight: 800; color: var(--royal-blue);
+  background: linear-gradient(90deg,#e8edf8,#f0f4ff);
+  padding: 7px 12px; border-radius: 6px;
+  margin: 18px 0 12px; border-left: 3px solid var(--gold);
+}
+.field-group { margin-bottom: 14px; }
+.field-group label { display:block; font-size:13px; font-weight:700; color:#444; margin-bottom:5px; }
+.field-group label span { color:#e53935; }
+.field-group input {
+  width:100%; padding:10px 14px; border:1.5px solid #cfd8dc; border-radius:8px;
+  font-size:14.5px; color:#111; transition:border .2s; font-family:Arial,sans-serif;
+}
+.field-group input:focus { outline:none; border-color:var(--royal-blue); box-shadow:0 0 0 3px rgba(26,52,128,0.12); }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+.photo-upload-area {
+  width:110px; height:135px; border:2.5px dashed var(--gold); border-radius:8px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  cursor:pointer; background:#fffbf0; transition:all .2s; position:relative; overflow:hidden; flex-shrink:0;
+}
+.photo-upload-area:hover { border-color:var(--royal-blue); background:#eef0ff; }
+.photo-upload-area img { width:100%; height:100%; object-fit:cover; position:absolute; }
+.photo-upload-area .overlay {
+  position:absolute; bottom:0; left:0; right:0;
+  background:rgba(13,27,78,0.75); color:#ffd; font-size:11px; text-align:center; padding:4px; z-index:2;
+}
+
+.btn-gen {
+  width:100%; padding:14px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  color: var(--deep-blue); border:none; border-radius:10px;
+  font-size:17px; font-weight:900; cursor:pointer; margin-top:12px;
+  transition:all .2s; letter-spacing:1px; text-shadow: none;
+  box-shadow: 0 4px 15px rgba(201,148,42,0.4);
+}
+.btn-gen:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(201,148,42,0.5); }
+/* New Entry button */
+.btn-new-entry {
+  width:100%; padding:14px;
+  background:linear-gradient(90deg,#1a5c2a,#2e7d32);
+  color:#fff; border:none; border-radius:10px;
+  font-size:17px; font-weight:900; cursor:pointer;
+  margin-top:10px; transition:all .2s; letter-spacing:1px;
+  box-shadow:0 4px 15px rgba(27,94,32,0.4); display:none;
+}
+.btn-new-entry:hover { transform:translateY(-2px); box-shadow:0 8px 25px rgba(27,94,32,0.5); }
+
+/* ── CHANGE PASSWORD MODAL ── */
+.chpass-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.7); z-index:9100;
+  align-items:center; justify-content:center;
+}
+.chpass-overlay.open { display:flex; }
+.chpass-box {
+  background:#fff; border-radius:16px;
+  padding:32px 28px; width:340px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  border-top:4px solid var(--royal-blue);
+  animation:modalIn .2s ease;
+}
+.chpass-box h3 {
+  font-size:17px; font-weight:900; color:var(--royal-blue);
+  margin-bottom:6px; display:flex; align-items:center; gap:8px;
+}
+.chpass-box p { font-size:13px; color:#555; margin-bottom:18px; }
+.chpass-field { margin-bottom:14px; }
+.chpass-field label {
+  display:block; font-size:12px; font-weight:800;
+  color:#444; margin-bottom:5px;
+}
+.chpass-input-wrap { position:relative; }
+.chpass-input-wrap input {
+  width:100%; padding:11px 40px 11px 14px;
+  border:2px solid #ccc; border-radius:8px;
+  font-size:15px; font-family:Arial,sans-serif;
+  transition:border .2s;
+}
+.chpass-input-wrap input:focus { outline:none; border-color:var(--royal-blue); }
+.chpass-input-wrap input.error { border-color:#b71c1c; }
+.chpass-input-wrap .eye-btn2 {
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer; font-size:18px; color:#888;
+}
+.chpass-err { color:#b71c1c; font-size:12px; font-weight:700; margin-top:4px; display:none; }
+.chpass-ok  { color:#2e7d32; font-size:12px; font-weight:700; margin-top:4px; display:none; }
+.strength-bar {
+  height:4px; border-radius:4px; margin-top:6px;
+  background:#eee; overflow:hidden;
+}
+.strength-fill {
+  height:100%; border-radius:4px; width:0%;
+  transition:width .3s, background .3s;
+}
+.chpass-btns { display:flex; gap:10px; margin-top:20px; }
+.chpass-btn-cancel {
+  flex:1; padding:11px; border:1.5px solid #ccc; border-radius:8px;
+  background:#fff; font-size:14px; font-weight:700; cursor:pointer; color:#555;
+}
+.chpass-btn-cancel:hover { background:#f5f5f5; }
+.chpass-btn-save {
+  flex:1; padding:11px; border:none; border-radius:8px;
+  background:linear-gradient(90deg,var(--royal-blue),var(--deep-blue));
+  color:#fff; font-size:14px; font-weight:800; cursor:pointer;
+}
+.chpass-btn-save:hover { filter:brightness(1.15); }
+
+/* ── ADMIN DELETE MODAL ── */
+.modal-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.7); z-index:9000;
+  align-items:center; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal-box {
+  background:#fff; border-radius:16px;
+  padding:32px 28px; width:320px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  border-top:4px solid var(--red);
+  position:relative;
+  animation:modalIn .2s ease;
+}
+@keyframes modalIn { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+.modal-box h3 {
+  font-size:17px; font-weight:900; color:#b71c1c;
+  margin-bottom:6px; display:flex; align-items:center; gap:8px;
+}
+.modal-box p { font-size:13px; color:#555; margin-bottom:18px; }
+.modal-name {
+  font-size:14px; font-weight:800; color:var(--deep-blue);
+  background:#f0f4ff; border-radius:8px; padding:8px 12px;
+  margin-bottom:16px; text-align:center;
+}
+.modal-input-wrap { position:relative; margin-bottom:18px; }
+.modal-input-wrap input {
+  width:100%; padding:11px 40px 11px 14px;
+  border:2px solid #ccc; border-radius:8px;
+  font-size:15px; font-family:Arial,sans-serif;
+  transition:border .2s;
+}
+.modal-input-wrap input:focus { outline:none; border-color:#b71c1c; }
+.modal-input-wrap .eye-btn {
+  position:absolute; right:10px; top:50%; transform:translateY(-50%);
+  background:none; border:none; cursor:pointer; font-size:18px; color:#888;
+}
+.modal-err { color:#b71c1c; font-size:12px; font-weight:700; margin-top:-12px; margin-bottom:12px; display:none; }
+.modal-btns { display:flex; gap:10px; }
+.modal-btn-cancel {
+  flex:1; padding:11px; border:1.5px solid #ccc; border-radius:8px;
+  background:#fff; font-size:14px; font-weight:700; cursor:pointer; color:#555;
+}
+.modal-btn-cancel:hover { background:#f5f5f5; }
+.modal-btn-confirm {
+  flex:1; padding:11px; border:none; border-radius:8px;
+  background:linear-gradient(90deg,#b71c1c,#c62828);
+  color:#fff; font-size:14px; font-weight:800; cursor:pointer;
+}
+.modal-btn-confirm:hover { filter:brightness(1.1); }
+
+
+/* Disabled state for gen/save buttons */
+.btn-gen:disabled, .btn-save:disabled {
+  opacity:0.38; cursor:not-allowed;
+  transform:none !important; box-shadow:none !important; filter:none !important;
+}
+
+
+/* ══ CERT PAGE ══ */
+#cert-page { padding: 24px; }
+.cert-actions {
+  display:flex; gap:12px; justify-content:center; margin-bottom:16px; flex-wrap:wrap; align-items:center;
+}
+.btn-act {
+  padding:11px 28px; border:none; border-radius:8px;
+  font-size:14px; font-weight:700; cursor:pointer; transition:all .2s;
+}
+.btn-act.pri { background:linear-gradient(90deg,var(--gold-dark),var(--gold)); color:var(--deep-blue); }
+.btn-act.sec { background:rgba(255,255,255,0.15); color:#fff; border:1px solid rgba(255,255,255,0.3); }
+.btn-act:hover { transform:translateY(-1px); }
+/* ══ LIST PAGE ══ */
+#list-page { padding: 22px; }
+.list-card {
+  background: rgba(255,255,255,0.97); border-radius: 14px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  overflow: hidden; border: 1px solid rgba(201,148,42,0.3);
+  max-width: 1000px; margin: 0 auto;
+}
+.list-header {
+  background: linear-gradient(90deg, var(--deep-blue), var(--royal-blue));
+  padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 2px solid var(--gold);
+}
+.list-header h3 { color: var(--gold-light); font-size: 16px; font-weight: 800; display:flex;align-items:center;gap:8px; }
+.list-count {
+  background: var(--gold); color: var(--deep-blue);
+  font-size: 12px; font-weight: 900;
+  padding: 3px 12px; border-radius: 20px;
+}
+.list-actions { display:flex; gap:8px; }
+.btn-clear-all {
+  padding: 7px 14px; border: none; border-radius: 6px;
+  background: rgba(183,28,28,0.15); color: #ef9a9a;
+  font-size: 12px; font-weight: 700; cursor: pointer;
+  border: 1px solid rgba(183,28,28,0.3); transition: all .2s;
+}
+.btn-clear-all:hover { background: rgba(183,28,28,0.3); color: #fff; }
+
+.list-table-wrap { overflow-x: auto; }
+table.list-tbl {
+  width: 100%; border-collapse: collapse;
+  font-size: 13.5px;
+}
+table.list-tbl thead tr {
+  background: linear-gradient(90deg,#e8edf8,#f0f4ff);
+  border-bottom: 2px solid rgba(201,148,42,0.3);
+}
+table.list-tbl thead th {
+  padding: 11px 12px; text-align: left;
+  font-weight: 800; color: var(--royal-blue);
+  white-space: nowrap; font-size: 13px;
+}
+table.list-tbl tbody tr {
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: background .15s;
+}
+table.list-tbl tbody tr:hover { background: #fffbf0; }
+table.list-tbl tbody tr:nth-child(even) { background: rgba(201,148,42,0.04); }
+table.list-tbl tbody tr:nth-child(even):hover { background: #fffbf0; }
+table.list-tbl td {
+  padding: 10px 12px; vertical-align: middle; color: #222;
+}
+.tbl-no {
+  width: 40px; text-align: center; font-weight: 800;
+  color: var(--royal-blue); font-size: 14px;
+}
+.tbl-name { font-weight: 800; color: var(--deep-blue); }
+.tbl-school { color: var(--green); font-size: 13px; }
+.tbl-dias { font-size: 12px; color: #777; font-weight: 700; }
+.tbl-date { font-size: 12px; color: #888; white-space: nowrap; }
+.tbl-dhoran { text-align: center; font-weight: 800; color: var(--royal-blue); }
+
+.badge-status {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #e8f5e9; color: #2e7d32;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 800;
+  border: 1px solid rgba(46,125,50,0.25);
+}
+
+.tbl-btns { display: flex; gap: 6px; white-space: nowrap; }
+.btn-tbl-load {
+  padding: 5px 12px; border: none; border-radius: 6px;
+  background: linear-gradient(90deg,var(--royal-blue),var(--deep-blue));
+  color: #fff; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all .18s;
+}
+.btn-tbl-load:hover { filter: brightness(1.2); transform: translateY(-1px); }
+.btn-tbl-pdf {
+  padding: 5px 12px; border: none; border-radius: 6px;
+  background: linear-gradient(90deg,#b71c1c,#c62828);
+  color: #fff; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all .18s;
+}
+.btn-tbl-pdf:hover { filter: brightness(1.2); transform: translateY(-1px); }
+.btn-tbl-del {
+  padding: 5px 10px; border: none; border-radius: 6px;
+  background: rgba(100,100,100,0.12); color: #888;
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: all .18s;
+}
+.btn-tbl-del:hover { background: rgba(183,28,28,0.15); color: #c62828; }
+
+.list-empty {
+  text-align: center; padding: 50px 20px;
+  color: #bbb; font-size: 15px; font-weight: 700;
+}
+.list-empty .empty-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+
+
+/* ── SAVE / LOAD TOAST ── */
+.btn-save {
+  padding:11px 22px; border:none; border-radius:8px;
+  background:linear-gradient(90deg,#1b5e20,#2e7d32);
+  color:#fff; font-size:14px; font-weight:800;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; gap:6px;
+  box-shadow:0 3px 12px rgba(27,94,32,0.4);
+}
+.btn-save:hover { transform:translateY(-1px); filter:brightness(1.1); }
+.btn-load {
+  padding:11px 22px; border:none; border-radius:8px;
+  background:rgba(255,255,255,0.12);
+  color:#fff; font-size:14px; font-weight:800;
+  cursor:pointer; transition:all .2s;
+  border:1.5px solid rgba(255,255,255,0.25);
+  display:flex; align-items:center; gap:6px;
+}
+.btn-load:hover { background:rgba(255,255,255,0.2); transform:translateY(-1px); }
+
+/* Toast */
+.toast {
+  position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:#1b5e20; color:#fff;
+  padding:13px 28px; border-radius:40px;
+  font-size:15px; font-weight:700;
+  box-shadow:0 6px 30px rgba(0,0,0,0.35);
+  transition:all .35s cubic-bezier(.34,1.56,.64,1);
+  z-index:9999; pointer-events:none; opacity:0;
+  display:flex; align-items:center; gap:9px;
+}
+.toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+.toast.error { background:#b71c1c; }
+
+
+
+
+/* PRINT DROPDOWN */
+.print-group { position:relative; display:inline-flex; }
+.btn-print-main {
+  padding:11px 20px 11px 22px; border:none;
+  border-radius:8px 0 0 8px;
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold));
+  color:var(--deep-blue); font-size:14px; font-weight:800;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; gap:7px;
+}
+.btn-print-main:hover { filter:brightness(1.08); transform:translateY(-1px); }
+.btn-print-arrow {
+  padding:11px 12px; border:none;
+  border-radius:0 8px 8px 0;
+  border-left:1.5px solid rgba(0,0,0,0.2);
+  background:linear-gradient(90deg,var(--gold),var(--gold-dark));
+  color:var(--deep-blue); font-size:13px; font-weight:900;
+  cursor:pointer; transition:all .2s;
+}
+.btn-print-arrow:hover { filter:brightness(1.1); transform:translateY(-1px); }
+.print-dropdown {
+  display:none; position:absolute; top:calc(100% + 6px); right:0;
+  background:#0d1b4e; border:1.5px solid var(--gold);
+  border-radius:10px; min-width:210px; overflow:hidden;
+  box-shadow:0 8px 30px rgba(0,0,0,0.5); z-index:100;
+}
+.print-dropdown.open { display:block; animation:dropFade .18s ease; }
+@keyframes dropFade { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+.dd-title {
+  background:linear-gradient(90deg,rgba(201,148,42,0.2),rgba(201,148,42,0.05));
+  color:var(--gold-light); font-size:11px; font-weight:800;
+  padding:8px 14px 6px; letter-spacing:1.5px; text-transform:uppercase;
+  border-bottom:1px solid rgba(201,148,42,0.2);
+}
+.dd-item {
+  display:flex; align-items:center; gap:12px;
+  padding:11px 16px; cursor:pointer; transition:all .18s;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  color:#fff;
+}
+.dd-item:last-child { border-bottom:none; }
+.dd-item:hover { background:rgba(201,148,42,0.18); }
+.dd-item.selected { background:rgba(201,148,42,0.12); }
+.dd-item .dd-icon {
+  width:36px; height:36px; border-radius:6px;
+  background:linear-gradient(135deg,var(--royal-blue),var(--deep-blue));
+  border:1px solid rgba(201,148,42,0.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; flex-shrink:0;
+}
+.dd-item.selected .dd-icon { background:linear-gradient(135deg,var(--gold-dark),var(--gold)); }
+.dd-item-text { flex:1; }
+.dd-item-name { font-size:14px; font-weight:800; color:#fff; }
+.dd-item.selected .dd-item-name { color:var(--gold-light); }
+.dd-item-sub { font-size:11px; color:rgba(255,255,255,0.45); margin-top:1px; }
+.dd-check { font-size:16px; color:var(--gold); opacity:0; }
+.dd-item.selected .dd-check { opacity:1; }
+
+.cert-wrap { max-width: 210mm; margin: 0 auto; }
+
+/* ══ CERTIFICATE ══ */
+.cert {
+  background: var(--cream);
+  box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Watermark */
+.cert::before {
+  content: "✦";
+  position: absolute;
+  font-size: 400px;
+  color: rgba(201,148,42,0.04);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Ornate Border ── */
+.cert-border {
+  position: absolute; inset: 8px;
+  border: 2px solid var(--gold);
+  pointer-events: none; z-index: 1;
+}
+.cert-border::before {
+  content: '';
+  position: absolute; inset: 4px;
+  border: 1px solid rgba(201,148,42,0.4);
+}
+/* Corner ornaments */
+.corner {
+  position: absolute; width: 38px; height: 38px; z-index: 2;
+}
+.corner svg { width:100%; height:100%; }
+.c-tl { top: 8px; left: 8px; }
+.c-tr { top: 8px; right: 8px; transform: scaleX(-1); }
+.c-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+.c-br { bottom: 8px; right: 8px; transform: scale(-1,-1); }
+
+.cert-inner { position: relative; z-index: 3; }
+
+/* ── HEADER ── */
+.cert-header {
+  background: linear-gradient(180deg, #0d1b4e 0%, #1a3480 40%, #1a3480 60%, #0d1b4e 100%);
+  padding: 14px 18px 16px;
+  display: flex; align-items: center; gap: 14px;
+  position: relative;
+  min-height: 110px;
+}
+.cert-header::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), #f0d080, var(--gold), transparent);
+}
+
+/* Gold shimmer line */
+.gold-line-top {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), #f0d080, var(--gold), transparent);
+}
+
+.cert-logo {
+  width: 85px; height: 85px; border-radius: 50%;
+  border: 3px solid var(--gold);
+  background: radial-gradient(circle, #fff9e6, #f5e0a0);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 42px; flex-shrink: 0; overflow: hidden;
+  box-shadow: 0 0 0 4px rgba(201,148,42,0.2), 0 4px 15px rgba(0,0,0,0.4);
+}
+.cert-logo img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+
+.cert-school-block {
+  flex:1;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  min-width:0;
+  padding: 4px 0;
+}
+.csn {
+  font-family: 'Cinzel', serif;
+  font-size: 20px; font-weight: 900; color: var(--gold-light);
+  letter-spacing: 1.5px; text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  line-height: 1.4;
+  white-space: normal;
+  word-break: break-word;
+  width: 100%;
+  text-align: center;
+}
+.csa {
+  font-size: 13px; font-weight: 700; color: #b8c8e8;
+  margin-top: 5px; line-height: 1.4;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.csd {
+  font-size: 12.5px; font-weight: 800;
+  color: var(--gold-light); margin-top: 5px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cgrid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr); gap:3px; width:52px; flex-shrink:0;
+}
+.cgrid span { border-radius:3px; height:14px; display:block; }
+
+/* ── TITLE ── */
+.cert-title-wrap {
+  padding: 14px 24px 10px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--cream-dark) 100%);
+  position: relative;
+}
+.cert-title-wrap::before, .cert-title-wrap::after {
+  content: '✦ ✦ ✦';
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 12px; color: var(--gold); opacity: 0.6;
+}
+.cert-title-wrap::before { left: 24px; }
+.cert-title-wrap::after  { right: 24px; }
+
+.cert-title {
+  display: inline-block;
+  background: linear-gradient(135deg, #0d1b4e, #1a3480);
+  color: var(--gold-light);
+  font-family: 'Cinzel', serif;
+  font-size: 20px; font-weight: 900;
+  padding: 10px 44px; border-radius: 4px;
+  letter-spacing: 3px;
+  border: 1px solid var(--gold);
+  box-shadow: 0 4px 20px rgba(13,27,78,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+  position: relative;
+}
+.cert-title::before, .cert-title::after {
+  content: '❖';
+  position: absolute; top: 50%; transform: translateY(-50%);
+  font-size: 14px; color: var(--gold);
+}
+.cert-title::before { left: 14px; }
+.cert-title::after  { right: 14px; }
+
+/* ── MAIN CONTENT ── */
+.cert-body {
+  padding: 10px 26px 16px;
+}
+
+/* Reg + Photo */
+.cert-rp {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 12px;
+}
+.cert-reg {
+  font-size: 15px; font-weight: 800; color: var(--deep-blue);
+  padding: 6px 0;
+}
+.cert-ph {
+  width: 90px; height: 110px;
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+  overflow: hidden; flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15), inset 0 0 0 3px rgba(201,148,42,0.1);
+  position: relative;
+}
+.cert-ph::before {
+  content: ''; position: absolute; inset: 3px;
+  border: 1px solid rgba(201,148,42,0.3);
+  pointer-events: none; z-index: 1;
+}
+.cert-ph img { width:100%; height:100%; object-fit:cover; }
+
+/* Decorative divider */
+.deco-div {
+  text-align: center; color: var(--gold); font-size: 14px;
+  margin: 6px 0; letter-spacing: 4px; opacity: 0.7;
+}
+
+/* Body para */
+.cert-para {
+  font-size: 14.5px; line-height: 2.2; color: #111;
+  text-align: justify; margin: 6px 0 10px; text-indent: 28px;
+  background: linear-gradient(135deg, rgba(201,148,42,0.04), transparent);
+  border-left: 3px solid var(--gold);
+  padding: 8px 12px 8px 14px;
+  border-radius: 0 6px 6px 0;
+}
+.cert-para .u { font-weight: 900; text-decoration: underline; color: var(--red); font-style: italic; }
+
+/* Fields table */
+.cert-fld-wrap {
+  background: linear-gradient(135deg,#fffaf0,#fdf6e0);
+  border: 1px solid rgba(201,148,42,0.25);
+  border-radius: 10px; padding: 8px 14px 4px; margin: 8px 0 12px;
+}
+.cert-fld { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.cert-fld tr { border-bottom: 1px dashed rgba(201,148,42,0.2); }
+.cert-fld tr:last-child { border-bottom: none; }
+.cert-fld td { padding: 6px 8px; vertical-align: middle; color: #111; }
+.cert-fld td.l { font-weight: 700; width: 210px; color: var(--royal-blue); }
+.cert-fld td.c { width: 16px; font-weight: 900; color: var(--gold-dark); }
+.cert-fld td.v span { font-weight: 900; text-decoration: underline; font-style: italic; color: #111; }
+.field-icon { margin-right: 5px; font-size: 12px; }
+
+/* Note */
+.cert-note {
+  font-size: 14px; line-height: 2.1; color: #333;
+  text-align: justify; text-indent: 28px;
+  padding: 10px 14px;
+  background: rgba(13,27,78,0.03);
+  border-radius: 8px;
+  border: 1px dashed rgba(13,27,78,0.12);
+}
+.cert-note .u { font-weight: 900; text-decoration: underline; color: var(--royal-blue); }
+
+/* Footer gold divider */
+.footer-gold {
+  height: 2px; margin: 10px 26px 0;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+}
+
+/* Footer */
+.cert-footer {
+  padding: 10px 26px 20px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.cfl { font-size: 14.5px; font-weight: 800; line-height: 2.4; color: var(--deep-blue); }
+.cfr {
+  text-align: center; font-size: 15px; font-weight: 800; color: var(--red);
+  padding-bottom: 4px;
+}
+.cfr .sig-line {
+  width: 170px; border-top: 1.5px solid var(--deep-blue);
+  margin-bottom: 5px;
+}
+
+@media print {
+  body { background: #fff; }
+  .navbar,.tabs,.cert-actions,.size-bar { display:none!important; }
+  #form-page { display:none!important; }
+  #cert-page { display:block!important; padding:0; }
+  .cert-wrap { max-width:100%; }
+  .cert {
+    box-shadow:none;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .cert-inner {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+  }
+  .cert-body {
+    flex: 1;
+  }
+  .footer-gold,
+  .cert-footer {
+    margin-top: auto;
+  }
+  .section.active { padding:0; }
+}
+
+/* ══ LOCK SCREEN ══ */
+#lock-screen {
+  position: fixed; inset: 0; z-index: 99999;
+  background: linear-gradient(135deg, #0d1b4e 0%, #1a3480 45%, #0d2b1a 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'Cinzel', Arial, sans-serif;
+  gap: 0;
+}
+.lock-logo {
+  font-size: 80px; margin-bottom: 28px;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(201,148,42,0.5));
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+.lock-main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 36px; font-weight: 900;
+  color: var(--gold-light);
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px rgba(201,148,42,0.6), 0 4px 12px rgba(0,0,0,0.5);
+  margin-bottom: 10px;
+  animation: fadeUp .8s ease both;
+}
+.lock-sub-title {
+  font-size: 15px; font-weight: 400; letter-spacing: 6px;
+  color: rgba(180,200,240,0.6); margin-bottom: 44px;
+  animation: fadeUp 1s ease .2s both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.lock-btn {
+  padding: 16px 52px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  color: var(--deep-blue); border: none; border-radius: 50px;
+  font-size: 18px; font-weight: 900; cursor: pointer;
+  letter-spacing: 2px; transition: all .25s;
+  box-shadow: 0 4px 24px rgba(201,148,42,0.5);
+  animation: fadeUp 1s ease .4s both;
+  margin-bottom: 130px;
+}
+.lock-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 36px rgba(201,148,42,0.65);
+}
+.lock-btn:active { transform: scale(0.97); }
+
+/* Lock screen credit */
+.lock-credit {
+  position: absolute; bottom: 36px; left: 0; right: 0;
+  text-align: center; animation: fadeUp 1s ease .6s both;
+  padding: 0 20px;
+}
+.lock-credit-name {
+  font-size: 13.5px; font-weight: 800; letter-spacing: 2px;
+  color: var(--gold-light); margin-bottom: 4px;
+}
+.lock-credit-addr {
+  font-size: 11.5px; color: rgba(180,200,240,0.55);
+  letter-spacing: 1px; margin-bottom: 10px;
+}
+.lock-wa {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(37,211,102,0.15);
+  border: 1px solid rgba(37,211,102,0.4);
+  border-radius: 30px; padding: 6px 18px;
+  color: #5aef8a; font-size: 14px; font-weight: 800;
+  text-decoration: none; letter-spacing: 1px;
+  transition: all .2s;
+}
+.lock-wa:hover {
+  background: rgba(37,211,102,0.28);
+  border-color: rgba(37,211,102,0.7);
+  transform: translateY(-2px);
+}
+
+
+/* ── PDF PIN MODAL ── */
+.pin-overlay {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.75); z-index:9200;
+  align-items:center; justify-content:center;
+}
+.pin-overlay.open { display:flex; }
+.pin-box {
+  background:#fff; border-radius:18px;
+  padding:28px 24px; width:290px; text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  border-top:4px solid var(--royal-blue, #1a237e);
+  animation:modalIn .2s ease;
+}
+.pin-box h3 { font-size:16px; font-weight:900; color:#1a237e; margin-bottom:4px; }
+.pin-for-name { font-size:13px; font-weight:800; color:#0d1b4e; margin-bottom:6px; }
+.pin-box > p  { font-size:12px; color:#888; margin-bottom:16px; }
+.pin-dots { display:flex; justify-content:center; gap:12px; margin-bottom:16px; }
+.pin-dot { width:16px; height:16px; border-radius:50%; border:2px solid #ccc; background:#fff; transition:all .15s; }
+.pin-dot.filled { background:#1a237e; border-color:#1a237e; }
+.pin-dot.error  { background:#e53935; border-color:#e53935; }
+.pin-keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:12px; }
+.pin-key {
+  padding:13px; border:1.5px solid #e0e0e0; border-radius:10px;
+  font-size:19px; font-weight:800; background:#fafafa;
+  cursor:pointer; transition:all .15s; color:#222;
+}
+.pin-key:hover  { background:#e8eaf6; border-color:#1a237e; }
+.pin-key:active { transform:scale(0.92); background:#c5cae9; }
+.pin-key.del    { font-size:15px; color:#888; }
+.pin-err { color:#e53935; font-size:12px; font-weight:700; min-height:16px; margin-bottom:8px; }
+.pin-cancel {
+  width:100%; padding:10px; border:1.5px solid #ccc; border-radius:8px;
+  background:#fff; font-size:14px; font-weight:700; cursor:pointer; color:#666;
+}
+.pin-cancel:hover { background:#f5f5f5; }
+
+</style>
+</head>
+<body>
+
+<!-- ══ LOCK SCREEN ══ -->
+<div id="lock-screen">
+  <div class="lock-logo">📜</div>
+  <div class="lock-main-title">બોનાફાઈડ સર્ટિફિકેટ</div>
+  <div class="lock-sub-title">Bonafide Certificate</div>
+  <button class="lock-btn" onclick="unlockApp()">▶ &nbsp;ENTER</button>
+
+  <div class="lock-credit">
+    <div class="lock-credit-name">✦ &nbsp;PATEL NITIN MOTIMOYADI&nbsp; ✦</div>
+    <div class="lock-credit-addr">TA-MEGHRAJ &nbsp;|&nbsp; DIST-ARAVALLI</div>
+    <a class="lock-wa" href="https://wa.me/917990752541" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="16" fill="#25D366"/>
+        <path d="M23.5 8.5A10.4 10.4 0 0 0 16 5.5C10.2 5.5 5.5 10.2 5.5 16c0 1.85.49 3.65 1.4 5.23L5.5 26.5l5.4-1.38A10.43 10.43 0 0 0 16 26.5c5.8 0 10.5-4.7 10.5-10.5 0-2.8-1.09-5.43-3-7.5zm-7.5 16.1c-1.57 0-3.1-.42-4.44-1.2l-.32-.19-3.2.82.85-3.1-.21-.33A8.6 8.6 0 0 1 7.4 16c0-4.74 3.86-8.6 8.6-8.6 2.3 0 4.46.9 6.08 2.52a8.55 8.55 0 0 1 2.52 6.08c0 4.74-3.86 8.6-8.6 8.6zm4.72-6.44c-.26-.13-1.52-.75-1.76-.83-.23-.09-.4-.13-.57.13-.17.26-.65.83-.8 1-.15.17-.3.19-.55.06-.26-.13-1.08-.4-2.06-1.27-.76-.68-1.28-1.52-1.43-1.77-.15-.26-.02-.4.11-.52.12-.12.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.57-1.37-.78-1.88-.2-.49-.42-.42-.57-.43h-.49c-.17 0-.44.06-.67.32-.23.26-.88.86-.88 2.1s.9 2.43 1.03 2.6c.13.17 1.78 2.72 4.3 3.8.6.26 1.07.41 1.44.53.6.19 1.16.16 1.59.1.49-.07 1.52-.62 1.73-1.22.22-.6.22-1.12.15-1.22-.06-.1-.23-.16-.49-.29z" fill="white"/>
+      </svg>
+      7990752541
+    </a>
+  </div>
+</div>
+
+<div class="navbar" id="main-app" style="display:none;">
+  <div style="font-size:28px;">🏫</div>
+  <div>
+    <h1 id="nav-school">શ્રી બક્ષીપંચ નિવાસી પ્રાથમિક શાળા</h1>
+    <p id="nav-addr">ભેમાપુર, તા.મેઘરજ, જી.અરવલ્લી &nbsp;|&nbsp; ડાયસ કોડ : 24270301011</p>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab('form-page',this)">📝 &nbsp;વિગત ભરો</div>
+  <div class="tab" onclick="showTab('cert-page',this)">📜 &nbsp;પ્રમાણપત્ર જુઓ</div>
+  <div class="tab" onclick="showTab('list-page',this)">📋 &nbsp;યાદી</div>
+</div>
+
+<!-- ══ FORM ══ -->
+<div class="section active" id="form-page">
+<div class="form-card">
+  <h2>🎓 &nbsp;બોનાફાઈડ પ્રમાણપત્ર — માહિતી ભરો</h2>
+
+
+  <div class="sec-div">🏫 &nbsp;શાળાની વિગત</div>
+  <div class="field-group">
+    <label>શાળાનું નામ <span>*</span></label>
+    <input type="text" id="school-name" value="શ્રી બક્ષીપંચ નિવાસી પ્રાથમિક શાળા" oninput="liveUpdate()">
+  </div>
+  <div class="row2">
+    <div class="field-group">
+      <label>મુ./ગ્રામ <span>*</span></label>
+      <input type="text" id="school-mun" value="ભેમાપુર" oninput="liveUpdate()">
+    </div>
+    <div class="field-group">
+      <label>તાલુકો <span>*</span></label>
+      <input type="text" id="school-ta" value="તા.મેઘરજ" oninput="liveUpdate()">
+    </div>
+  </div>
+  <div class="row2">
+    <div class="field-group">
+      <label>જિલ્લો <span>*</span></label>
+      <input type="text" id="school-ji" value="જી.અરવલ્લી" oninput="liveUpdate()">
+    </div>
+    <div class="field-group">
+      <label>ડાયસ કોડ <span>*</span></label>
+      <input type="text" id="school-dias" value="24270301011" maxlength="11" oninput="sanitizeDias(); liveUpdate()">
+    </div>
+  </div>
+
+  <div class="sec-div">🎓 &nbsp;વિદ્યાર્થીની વિગત</div>
+  <div style="display:flex;gap:20px;align-items:flex-start;margin-bottom:16px;">
+    <div>
+      <label style="display:block;font-size:13px;font-weight:700;color:#444;margin-bottom:6px;">📷 ફોટો</label>
+      <div class="photo-upload-area" onclick="document.getElementById('photo-input').click()" id="photo-area">
+        <span style="font-size:28px;z-index:1;">📷</span>
+        <span style="font-size:11px;color:#999;z-index:1;text-align:center;">ફોટો<br>ક્લિક કરો</span>
+      </div>
+      <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="previewPhoto(event)">
+    </div>
+    <div style="flex:1;">
+      <div class="field-group">
+        <label>જા.નં.</label>
+        <input type="text" id="jano" placeholder="દા.ત. 101" oninput="liveUpdate()">
+      </div>
+      <div class="row2">
+        <div class="field-group">
+          <label>વર્ષ <span>*</span></label>
+          <input type="text" id="year" value="2024-'25" oninput="liveUpdate()">
+        </div>
+        <div class="field-group">
+          <label>ધોરણ <span>*</span></label>
+          <input type="text" id="dhoran" placeholder="8" oninput="liveUpdate()">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>વિદ્યાર્થીનું પૂરું નામ <span>*</span></label>
+    <input type="text" id="std-name" placeholder="દા.ત. રાઠવા અશ્વિનભાઈ ગૂલસીંગભાઈ" oninput="liveUpdate()">
+  </div>
+  <div class="row2">
+    <div class="field-group">
+      <label>જન્મ તારીખ (DD/MM/YYYY) <span>*</span></label>
+      <input type="text" id="dob" placeholder="03/08/2010" oninput="autoDateWords(); liveUpdate()">
+    </div>
+    <div class="field-group">
+      <label>જન્મ તારીખ (શબ્દોમાં) <span>*</span></label>
+      <input type="text" id="dob-words" placeholder="ત્રીજી ઓગસ્ટ બેહજાર દસ" oninput="liveUpdate()">
+    </div>
+  </div>
+  <div class="row2">
+    <div class="field-group">
+      <label>વય પત્રક નંબર <span>*</span></label>
+      <input type="text" id="vay-no" placeholder="1256" oninput="liveUpdate()">
+    </div>
+    <div class="field-group">
+      <label>જ્ઞાતિ અને પેટા જ્ઞાતિ <span>*</span></label>
+      <input type="text" id="jati" placeholder="હિન્દુ રાઠવા" oninput="liveUpdate()">
+    </div>
+  </div>
+  <div class="field-group">
+    <label>ગામ (રહેઠાણ) <span>*</span></label>
+    <input type="text" id="village" value="ભેમાપુર" oninput="liveUpdate()">
+  </div>
+  <div class="row2">
+    <div class="field-group">
+      <label>સ્થળ</label>
+      <input type="text" id="sthad" value="શ્રી બક્ષીપંચ નિવાસી પ્રાથમિક શાળા" oninput="liveUpdate()">
+    </div>
+    <div class="field-group">
+      <label>તારીખ</label>
+      <input type="text" id="date" placeholder="  /  /" oninput="liveUpdate()">
+    </div>
+  </div>
+
+  <div class="field-group" style="margin-top:10px;">
+    <label style="font-size:13px;font-weight:900;color:#b71c1c;">
+      🔐 PDF કોડ (4 આંકડા) <span style="color:#e53935;">*</span>
+      <span style="font-size:11px;font-weight:600;color:#888;"> — આ કોડ વડે જ PDF ખૂલશે</span>
+    </label>
+    <input type="text" id="pdf-code" maxlength="4"
+      placeholder="1234"
+      oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,4); liveUpdate()">
+  </div>
+
+  <div id="action-btns"  style="display:flex; gap:12px; margin-top:12px;">
+    <button class="btn-gen" id="btn-gen" style="flex:1;" onclick="generateCert()" disabled>✨ &nbsp;પ્રમાણપત્ર તૈયાર કરો</button>
+    <button class="btn-save" id="btn-save" style="flex:0 0 auto; padding:14px 24px;" onclick="saveRecord()" disabled>💾 &nbsp;સાચવો</button>
+  </div>
+  <button class="btn-new-entry" id="btn-new-entry" onclick="newEntry()">➕ &nbsp;નવી એન્ટ્રી</button>
+</div>
+</div>
+
+<!-- ══ CERTIFICATE ══ -->
+<div class="section" id="cert-page">
+
+
+  <div class="cert-wrap">
+  <div class="cert" id="certificate">
+
+    <!-- Ornate corners -->
+    <div class="cert-border"></div>
+    <div class="corner c-tl">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 36 L2 2 L36 2" stroke="#c9942a" stroke-width="2.5" fill="none"/>
+        <path d="M2 26 Q10 10 26 2" stroke="#c9942a" stroke-width="1" fill="none" opacity="0.5"/>
+        <circle cx="2" cy="2" r="3" fill="#c9942a"/>
+        <circle cx="10" cy="10" r="2" fill="#c9942a" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="corner c-tr">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 36 L2 2 L36 2" stroke="#c9942a" stroke-width="2.5" fill="none"/>
+        <path d="M2 26 Q10 10 26 2" stroke="#c9942a" stroke-width="1" fill="none" opacity="0.5"/>
+        <circle cx="2" cy="2" r="3" fill="#c9942a"/>
+        <circle cx="10" cy="10" r="2" fill="#c9942a" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="corner c-bl">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 36 L2 2 L36 2" stroke="#c9942a" stroke-width="2.5" fill="none"/>
+        <path d="M2 26 Q10 10 26 2" stroke="#c9942a" stroke-width="1" fill="none" opacity="0.5"/>
+        <circle cx="2" cy="2" r="3" fill="#c9942a"/>
+        <circle cx="10" cy="10" r="2" fill="#c9942a" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="corner c-br">
+      <svg viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 36 L2 2 L36 2" stroke="#c9942a" stroke-width="2.5" fill="none"/>
+        <path d="M2 26 Q10 10 26 2" stroke="#c9942a" stroke-width="1" fill="none" opacity="0.5"/>
+        <circle cx="2" cy="2" r="3" fill="#c9942a"/>
+        <circle cx="10" cy="10" r="2" fill="#c9942a" opacity="0.5"/>
+      </svg>
+    </div>
+
+    <div class="cert-inner">
+      <div class="gold-line-top"></div>
+
+      <!-- HEADER -->
+      <div class="cert-header">
+        <div class="cert-logo" id="c-logo">
+          <!-- LEFT LOGO: Diya (oil lamp) with open book — Education symbol -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
+            <defs>
+              <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#1a3480"/>
+                <stop offset="100%" stop-color="#0d1b4e"/>
+              </radialGradient>
+              <radialGradient id="flameGrad" cx="50%" cy="80%" r="60%">
+                <stop offset="0%" stop-color="#fff176"/>
+                <stop offset="40%" stop-color="#ffb300"/>
+                <stop offset="100%" stop-color="#e65100"/>
+              </radialGradient>
+            </defs>
+            <!-- Background circle -->
+            <circle cx="50" cy="50" r="48" fill="url(#bgGrad)"/>
+            <!-- Decorative outer ring -->
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#c9942a" stroke-width="1.8"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#f0d080" stroke-width="0.6" stroke-dasharray="4 3"/>
+            <!-- Rotating dotted ring -->
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(0,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(30,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(60,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(90,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(120,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(150,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(180,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(210,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(240,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(270,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(300,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(330,50,50)"/>
+            <!-- Open Book bottom -->
+            <path d="M22 66 Q35 60 50 62 Q65 60 78 66 L78 78 Q65 72 50 74 Q35 72 22 78 Z" fill="#f0d080"/>
+            <line x1="50" y1="62" x2="50" y2="78" stroke="#1a3480" stroke-width="1.5"/>
+            <!-- Book lines left page -->
+            <line x1="26" y1="68" x2="47" y2="65" stroke="#c9942a" stroke-width="0.9" opacity="0.7"/>
+            <line x1="26" y1="71" x2="47" y2="68" stroke="#c9942a" stroke-width="0.9" opacity="0.7"/>
+            <line x1="26" y1="74" x2="47" y2="71" stroke="#c9942a" stroke-width="0.9" opacity="0.7"/>
+            <!-- Book lines right page -->
+            <line x1="53" y1="65" x2="74" y2="68" stroke="#c9942a" stroke-width="0.9" opacity="0.7"/>
+            <line x1="53" y1="68" x2="74" y2="71" stroke="#c9942a" stroke-width="0.9" opacity="0.7"/>
+            <line x1="53" y1="71" x2="74" y2="74" stroke="#c9942a" stroke-width="0.9" opacity="0.7"/>
+            <!-- Diya (lamp) body -->
+            <ellipse cx="50" cy="57" rx="10" ry="4.5" fill="#c9942a"/>
+            <path d="M40 57 Q42 64 50 65 Q58 64 60 57 Z" fill="#b07d20"/>
+            <!-- Diya wick -->
+            <line x1="50" y1="53" x2="50" y2="48" stroke="#888" stroke-width="1"/>
+            <!-- Flame outer -->
+            <ellipse cx="50" cy="42" rx="5" ry="8" fill="url(#flameGrad)" opacity="0.9"/>
+            <!-- Flame inner bright -->
+            <ellipse cx="50" cy="44" rx="2.5" ry="4.5" fill="#fff9c4" opacity="0.8"/>
+            <!-- Flame tip -->
+            <ellipse cx="50" cy="38" rx="1.8" ry="3" fill="#fff" opacity="0.6"/>
+            <!-- Glow rays -->
+            <line x1="50" y1="30" x2="50" y2="26" stroke="#f0d080" stroke-width="1.2" opacity="0.5"/>
+            <line x1="57" y1="32" x2="60" y2="29" stroke="#f0d080" stroke-width="1" opacity="0.4"/>
+            <line x1="43" y1="32" x2="40" y2="29" stroke="#f0d080" stroke-width="1" opacity="0.4"/>
+            <line x1="60" y1="40" x2="64" y2="38" stroke="#f0d080" stroke-width="1" opacity="0.35"/>
+            <line x1="40" y1="40" x2="36" y2="38" stroke="#f0d080" stroke-width="1" opacity="0.35"/>
+          </svg>
+        </div>
+        <div class="cert-school-block">
+          <div class="csn" id="c-school-name">શ્રી બક્ષીપંચ નિવાસી પ્રાથમિક શાળા</div>
+          <div style="width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,148,42,0.5),transparent);margin:5px auto;"></div>
+          <div class="csa" id="c-school-addr">ભેમાપુર, તા.મેઘરજ, જી.અરવલ્લી</div>
+          <div style="width:40%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,148,42,0.4),transparent);margin:5px auto;"></div>
+          <div class="csd" id="c-dias">◆ &nbsp;ડાયસ કોડ : 24270301011 &nbsp;◆</div>
+        </div>
+        <div style="flex-shrink:0;width:90px;display:flex;align-items:center;justify-content:center;">
+          <!-- RIGHT LOGO: Graduation cap with rays — Knowledge & Achievement -->
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="90" height="90">
+            <defs>
+              <radialGradient id="bgGrad2" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#1a3480"/>
+                <stop offset="100%" stop-color="#0d1b4e"/>
+              </radialGradient>
+            </defs>
+            <!-- Background -->
+            <circle cx="50" cy="50" r="48" fill="url(#bgGrad2)"/>
+            <circle cx="50" cy="50" r="46" fill="none" stroke="#c9942a" stroke-width="1.8"/>
+            <circle cx="50" cy="50" r="42" fill="none" stroke="#f0d080" stroke-width="0.6" stroke-dasharray="4 3"/>
+            <!-- Decorative dots -->
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(0,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(30,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(60,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(90,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(120,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(150,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(180,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(210,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(240,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(270,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#c9942a" transform="rotate(300,50,50)"/>
+            <circle cx="50" cy="7"  r="2" fill="#f0d080" transform="rotate(330,50,50)"/>
+            <!-- Shine rays around cap -->
+            <line x1="50" y1="14" x2="50" y2="10" stroke="#f0d080" stroke-width="1.2" opacity="0.5"/>
+            <line x1="63" y1="18" x2="66" y2="15" stroke="#f0d080" stroke-width="1" opacity="0.4"/>
+            <line x1="37" y1="18" x2="34" y2="15" stroke="#f0d080" stroke-width="1" opacity="0.4"/>
+            <line x1="72" y1="28" x2="76" y2="26" stroke="#f0d080" stroke-width="1" opacity="0.35"/>
+            <line x1="28" y1="28" x2="24" y2="26" stroke="#f0d080" stroke-width="1" opacity="0.35"/>
+            <!-- Graduation Cap board (diamond) -->
+            <polygon points="50,22 72,33 50,42 28,33" fill="#c9942a"/>
+            <polygon points="50,25 69,34 50,40 31,34" fill="#f0d080" opacity="0.3"/>
+            <!-- Cap top button -->
+            <circle cx="50" cy="22" r="2.5" fill="#f0d080"/>
+            <!-- Cap body (cylinder top) -->
+            <rect x="38" y="33" width="24" height="12" rx="2" fill="#c9942a"/>
+            <ellipse cx="50" cy="45" rx="12" ry="3" fill="#b07d20"/>
+            <!-- Tassel string -->
+            <line x1="72" y1="33" x2="72" y2="50" stroke="#f0d080" stroke-width="1.5"/>
+            <circle cx="72" cy="50" r="2.5" fill="#f0d080"/>
+            <line x1="72" y1="52" x2="70" y2="60" stroke="#f0d080" stroke-width="1.2"/>
+            <line x1="72" y1="52" x2="72" y2="61" stroke="#f0d080" stroke-width="1.2"/>
+            <line x1="72" y1="52" x2="74" y2="60" stroke="#f0d080" stroke-width="1.2"/>
+            <!-- Pencil below cap -->
+            <rect x="43" y="52" width="14" height="5" rx="1" fill="#f0d080" transform="rotate(-30,50,55)"/>
+            <polygon points="43,57 40,62 46,59" fill="#ffb300" transform="rotate(-30,50,55)"/>
+            <rect x="54.5" y="52" width="3" height="5" rx="0.5" fill="#ef9a9a" transform="rotate(-30,50,55)"/>
+            <!-- Stars -->
+            <polygon points="25,65 26.5,70 31,70 27.5,73 29,78 25,75 21,78 22.5,73 19,70 23.5,70" fill="#f0d080" transform="scale(0.7) translate(10,20)"/>
+            <polygon points="75,65 76.5,70 81,70 77.5,73 79,78 75,75 71,78 72.5,73 69,70 73.5,70" fill="#c9942a" transform="scale(0.7) translate(-18,20)"/>
+            <!-- School text arc -->
+            <path id="arc" d="M 20,75 A 32,32 0 0,0 80,75" fill="none"/>
+            <text font-size="7.5" fill="#f0d080" font-weight="bold" font-family="Arial" letter-spacing="1">
+              <textPath href="#arc" startOffset="10%">શિક્ષણ • જ્ઞાન • ઉત્કર્ષ</textPath>
+            </text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- TITLE -->
+      <div class="cert-title-wrap">
+        <div class="cert-title">બોનાફ઼ાઈડ પ્રમાણપત્ર</div>
+      </div>
+
+      <!-- BODY -->
+      <div class="cert-body">
+
+        <!-- REG + PHOTO -->
+        <div class="cert-rp">
+          <div class="cert-reg">
+            જા.નં. &nbsp;<span id="c-jano" style="text-decoration:underline;font-style:italic;color:#0d1b4e;"></span>
+          </div>
+          <div class="cert-ph" id="c-photo-box">
+            <div style="text-align:center;color:#bbb;font-size:11px;">👤<br>ફોટો</div>
+          </div>
+        </div>
+
+        <!-- INTRO PARA -->
+        <div class="cert-para">
+          આથી પ્રમાણપત્ર લખી આપવામાં આવે છે કે
+          <span class="u" id="c-name1"></span>
+          સને <span class="u" id="c-year1"></span> ધોરણ <span class="u" id="c-dhoran1"></span>
+          માં અભ્યાસ કરે છે. તેની વધુ વિગતો નીચે મુજબ છે.
+        </div>
+
+        <!-- FIELDS -->
+        <div class="cert-fld-wrap">
+          <table class="cert-fld">
+            <tr>
+              <td class="l"><span class="field-icon">👤</span>*નામ</td>
+              <td class="c">:</td>
+              <td class="v"><span id="c-name"></span></td>
+            </tr>
+            <tr>
+              <td class="l"><span class="field-icon">📅</span>*જન્મ તારીખ</td>
+              <td class="c">:</td>
+              <td class="v"><span id="c-dob"></span></td>
+            </tr>
+            <tr>
+              <td class="l"><span class="field-icon">📝</span>*જન્મ તારીખ (શબ્દોમાં)</td>
+              <td class="c">:</td>
+              <td class="v"><span id="c-dobw"></span></td>
+            </tr>
+            <tr>
+              <td class="l"><span class="field-icon">🔢</span>*વય પત્રક નંબર</td>
+              <td class="c">:</td>
+              <td class="v"><span id="c-vay"></span></td>
+            </tr>
+            <tr>
+              <td class="l"><span class="field-icon">🏷</span>*જ્ઞાતિ અને પેટા જ્ઞાતિ</td>
+              <td class="c">:</td>
+              <td class="v"><span id="c-jati"></span></td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- NOTE -->
+        <div class="cert-note">
+          તેઓ <span class="u" id="c-village"></span> ગામના રહે છે. જે આ શાળાના વય પત્રક(જનરલ રજિસ્ટર) અને
+          અન્ય દસ્તાવેજો પરથી ખરાઈ કરી આ પ્રમાણપત્ર લખી આપવામાં આવે છે. જે ખરૂં અને બરાબર છે.
+        </div>
+
+      </div><!-- /cert-body -->
+
+      <div class="footer-gold"></div>
+
+      <!-- FOOTER -->
+      <div class="cert-footer">
+        <div class="cfl">
+          <div>📍 &nbsp;સ્થળ : <span id="c-sthad"></span></div>
+          <div>📆 &nbsp;તારીખ : <span id="c-date"></span></div>
+        </div>
+        <div class="cfr">
+          <div class="sig-line"></div>
+          આચાર્યશ્રીના સહીસિક્કા
+        </div>
+      </div>
+
+    </div><!-- /cert-inner -->
+  </div><!-- /cert -->
+  </div><!-- /cert-wrap -->
+</div><!-- /cert-page -->
+
+
+
+
+<!-- ══ LIST PAGE ══ -->
+<div class="section" id="list-page">
+  <div class="list-card">
+    <div class="list-header">
+      <h3>📋 &nbsp;બોનાફાઈડ — સંપૂર્ણ યાદી</h3>
+      <span class="list-count" id="list-count">0 નોંધ</span>
+        <button onclick="openChangePass()" style="padding:6px 14px;border:1.5px solid rgba(201,148,42,0.5);border-radius:6px;background:rgba(255,255,255,0.08);color:var(--gold-light);font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="this.style.background='rgba(201,148,42,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">🔑 &nbsp;પાસવર્ડ બદલો</button>
+    </div>
+    <div class="list-table-wrap">
+      <table class="list-tbl" id="main-list-tbl">
+        <thead id="list-thead">
+          <!-- columns built dynamically -->
+        </thead>
+        <tbody id="list-tbody">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ADMIN DELETE MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal-box">
+    <h3>🔐 &nbsp;Admin પાસવર્ડ</h3>
+    <p>ડિલીટ કરવા માટે Admin પાસવર્ડ દાખલ કરો.</p>
+    <div class="modal-name" id="modal-del-name"></div>
+    <div class="modal-input-wrap">
+      <input type="password" id="admin-pass-input" placeholder="પાસવર્ડ દાખલ કરો..." onkeydown="if(event.key==='Enter')confirmAdminDelete()">
+      <button class="eye-btn" onclick="togglePassView()">👁️</button>
+    </div>
+    <div class="modal-err" id="modal-err">❌ ખોટો પાસવર્ડ! ફરી પ્રયાસ કરો.</div>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="closeAdminModal()">રદ કરો</button>
+      <button class="modal-btn-confirm" onclick="confirmAdminDelete()">🗑️ ડિલીટ કરો</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="chpass-overlay" id="chpassModal">
+  <div class="chpass-box">
+    <h3>🔑 &nbsp;Admin પાસવર્ડ બદલો</h3>
+    <p>નવો પાસવર્ડ સેટ કરવા માટે પહેલા હાલનો પાસવર્ડ ભરો.</p>
+
+    <div class="chpass-field">
+      <label>હાલનો પાસવર્ડ</label>
+      <div class="chpass-input-wrap">
+        <input type="password" id="cp-current" placeholder="હાલનો પાસવર્ડ...">
+        <button class="eye-btn2" onclick="toggleCP('cp-current')">👁️</button>
+      </div>
+      <div class="chpass-err" id="cp-curr-err">❌ ખોટો પાસવર્ડ!</div>
+    </div>
+
+    <div class="chpass-field">
+      <label>નવો પાસવર્ડ</label>
+      <div class="chpass-input-wrap">
+        <input type="password" id="cp-new" placeholder="નવો પાસવર્ડ..." oninput="checkStrength()">
+        <button class="eye-btn2" onclick="toggleCP('cp-new')">👁️</button>
+      </div>
+      <div class="strength-bar"><div class="strength-fill" id="str-fill"></div></div>
+      <div id="str-label" style="font-size:11px;color:#999;margin-top:3px;"></div>
+    </div>
+
+    <div class="chpass-field">
+      <label>નવો પાસવર્ડ ફરી ભરો</label>
+      <div class="chpass-input-wrap">
+        <input type="password" id="cp-confirm" placeholder="ફરી ભરો...">
+        <button class="eye-btn2" onclick="toggleCP('cp-confirm')">👁️</button>
+      </div>
+      <div class="chpass-err" id="cp-match-err">❌ પાસવર્ડ મળતા નથી!</div>
+      <div class="chpass-ok"  id="cp-match-ok">✅ પાસવર્ડ મળે છે!</div>
+    </div>
+
+    <div class="chpass-btns">
+      <button class="chpass-btn-cancel" onclick="closeChangePass()">રદ કરો</button>
+      <button class="chpass-btn-save"   onclick="saveNewPass()">💾 સાચવો</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<!-- PDF PIN MODAL -->
+<div class="pin-overlay" id="pinModal">
+  <div class="pin-box">
+    <h3>🔐 &nbsp;PDF ખોલો</h3>
+    <div class="pin-for-name" id="pin-for-name"></div>
+    <p>4 અંકનો PDF કોડ દાખલ કરો</p>
+    <div class="pin-dots">
+      <div class="pin-dot" id="pd0"></div>
+      <div class="pin-dot" id="pd1"></div>
+      <div class="pin-dot" id="pd2"></div>
+      <div class="pin-dot" id="pd3"></div>
+    </div>
+    <div class="pin-keypad">
+      <button class="pin-key" onclick="pinPress('1')">1</button>
+      <button class="pin-key" onclick="pinPress('2')">2</button>
+      <button class="pin-key" onclick="pinPress('3')">3</button>
+      <button class="pin-key" onclick="pinPress('4')">4</button>
+      <button class="pin-key" onclick="pinPress('5')">5</button>
+      <button class="pin-key" onclick="pinPress('6')">6</button>
+      <button class="pin-key" onclick="pinPress('7')">7</button>
+      <button class="pin-key" onclick="pinPress('8')">8</button>
+      <button class="pin-key" onclick="pinPress('9')">9</button>
+      <button class="pin-key del" onclick="pinClear()">✕</button>
+      <button class="pin-key" onclick="pinPress('0')">0</button>
+      <button class="pin-key del" onclick="pinBackspace()">⌫</button>
+    </div>
+    <div class="pin-err" id="pin-err"></div>
+    <button class="pin-cancel" onclick="closePinModal()">રદ કરો</button>
+  </div>
+</div>
+
+</body>
+</html>
+
+
+<script>
+
+let photoDataUrl = null;
+
+function showTab(id, el) {
+  document.querySelectorAll('.section').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = 'none';
+  });
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const target = document.getElementById(id);
+  target.classList.add('active');
+  target.style.display = 'block';
+  if (el) el.classList.add('active');
+}
+
+function previewPhoto(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    photoDataUrl = ev.target.result;
+    document.getElementById('photo-area').innerHTML =
+      `<img src="${photoDataUrl}"><div class="overlay">બદલો</div>`;
+    document.getElementById('c-photo-box').innerHTML =
+      `<img src="${photoDataUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function g(id) { const el = document.getElementById(id); return el ? el.value.trim() : ''; }
+function s(id, val) { const el=document.getElementById(id); if(el) el.textContent=val; }
+
+function liveUpdate() {
+  updateLiveStrip();
+  checkFormComplete();
+  const sn=g('school-name'), mu=g('school-mun'), ta=g('school-ta'), ji=g('school-ji'), dias=g('school-dias');
+  s('c-school-name', sn);
+  s('c-school-addr', `${mu}, ${ta}, ${ji}`);
+  document.getElementById('c-dias').textContent = `◆  ડાયસ કોડ : ${dias}  ◆`;
+  document.getElementById('nav-school').textContent = sn;
+  document.getElementById('nav-addr').textContent = `${mu}, ${ta}, ${ji}  |  ડાયસ કોડ : ${dias}`;
+  s('c-jano', g('jano'));
+  s('c-name1', g('std-name')); s('c-year1', g('year')); s('c-dhoran1', g('dhoran'));
+  s('c-name', g('std-name')); s('c-dob', g('dob')); s('c-dobw', g('dob-words'));
+  s('c-vay', g('vay-no')); s('c-jati', g('jati')); s('c-village', g('village'));
+  s('c-sthad', g('sthad')); s('c-date', g('date') || '_____ / _____ / _____');
+}
+
+function generateCert() {
+  liveUpdate();
+  showTab('cert-page', document.querySelectorAll('.tab')[1]);
+}
+
+
+// ── Gujarati Date → Words ──────────────────────────────────────────
+const GU_DAYS = [
+  '', 'પહેલી','બીજી','ત્રીજી','ચોથી','પાંચમી','છઠ્ઠી','સાતમી','આઠમી','નવમી','દસમી',
+  'અગિયારમી','બારમી','તેરમી','ચૌદમી','પંદરમી','સોળમી','સત્તરમી','અઢારમી','ઓગણીસમી','વીસમી',
+  'એકવીસમી','બાવીસમી','તેવીસમી','ચોવીસમી','પચ્ચીસમી','છવ્વીસમી','સત્તાવીસમી','અઠ્ઠાવીસમી','ઓગણત્રીસમી','ત્રીસમી',
+  'એકત્રીસમી'
+];
+const GU_MONTHS = [
+  '','જાન્યુઆરી','ફેબ્રુઆરી','માર્ચ','એપ્રિલ','મે','જૂન',
+  'જુલાઈ','ઓગસ્ટ','સપ્ટેમ્બર','ઓક્ટોબર','નવેમ્બર','ડિસેમ્બર'
+];
+const GU_ONES = ['','એક','બે','ત્રણ','ચાર','પાંચ','છ','સાત','આઠ','નવ','દસ','અગિયાર','બાર','તેર','ચૌદ','પંદર','સોળ','સત્તર','અઢાર','ઓગણીસ'];
+const GU_TENS = ['','','વીસ','ત્રીસ','ચાળીસ','પચાસ','સાઈઠ','સિત્તેર','એંસી','નેવું'];
+const GU_TEENS = ['','એકવીસ','બાવીસ','તેવીસ','ચોવીસ','પચ્ચીસ','છવ્વીસ','સત્તાવીસ','અઠ્ઠાવીસ','ઓગણત્રીસ'];
+
+function twoDigitGu(n) {
+  if (n <= 0) return '';
+  if (n < 20) return GU_ONES[n];
+  const t = Math.floor(n/10), o = n%10;
+  if (t === 2 && o > 0) return GU_TEENS[o];
+  return o === 0 ? GU_TENS[t] : GU_ONES[o] + GU_TENS[t];
+}
+
+function yearToGu(y) {
+  if (!y || y < 1) return '';
+  const thousands = Math.floor(y / 1000);
+  const rem = y % 1000;
+  const hundreds = Math.floor(rem / 100);
+  const last2 = rem % 100;
+  let parts = [];
+  if (thousands > 0) parts.push(GU_ONES[thousands] + 'હજાર');
+  if (hundreds > 0) parts.push(GU_ONES[hundreds] + 'સો');
+  if (last2 > 0) parts.push(twoDigitGu(last2));
+  return parts.join(' ');
+}
+
+function autoDateWords() {
+  const val = document.getElementById('dob').value.trim();
+  const field = document.getElementById('dob-words');
+  const parts = val.split('/');
+  if (parts.length !== 3) { field.placeholder = 'ત્રીજી ઓગસ્ટ બેહજાર દસ'; return; }
+  const d = parseInt(parts[0]), m = parseInt(parts[1]), y = parseInt(parts[2]);
+  if (!d || !m || !y || d < 1 || d > 31 || m < 1 || m > 12) return;
+  const dayWord   = GU_DAYS[d]    || '';
+  const monthWord = GU_MONTHS[m]  || '';
+  const yearWord  = yearToGu(y);
+  if (dayWord && monthWord && yearWord) {
+    field.value = dayWord + ' ' + monthWord + ' ' + yearWord;
+    liveUpdate();
+  }
+}
+// ──────────────────────────────────────────────────────────────────
+let currentSize = 'a4';
+
+const sizeConfig = {
+  a4:     { label:'A4',     page:'A4 portrait',     width:'210mm', display:'(A4)' },
+  letter: { label:'Letter', page:'letter portrait', width:'216mm', display:'(Letter)' },
+  legal:  { label:'Legal',  page:'legal portrait',  width:'216mm', display:'(Legal)' }
+};
+
+function setSize(size) {
+  currentSize = size;
+  // Update dropdown items
+  ['a4','letter','legal'].forEach(s => {
+    const item = document.getElementById('dd-' + s);
+    if(item) item.classList.toggle('selected', s === size);
+  });
+  // Update button label
+  const lbl = document.getElementById('cur-size-label');
+  if(lbl) lbl.textContent = sizeConfig[size].display;
+  // Update cert-wrap max-width
+  const wrap = document.querySelector('.cert-wrap');
+  if(wrap) wrap.style.maxWidth = sizeConfig[size].width;
+  // Close dropdown
+  closeDropdown();
+}
+
+function toggleDropdown(e) {
+  e.stopPropagation();
+  const dd = document.getElementById('printDropdown');
+  dd.classList.toggle('open');
+}
+
+function closeDropdown() {
+  const dd = document.getElementById('printDropdown');
+  if(dd) dd.classList.remove('open');
+}
+
+document.addEventListener('click', function(e) {
+  const pg = document.getElementById('printGroup');
+  if(pg && !pg.contains(e.target)) closeDropdown();
+});
+
+function doPrint() {
+  closeDropdown();
+  const cfg = sizeConfig[currentSize];
+  const certHTML = document.getElementById('certificate').innerHTML;
+
+  // Collect all <style> tags from current document
+  let styles = '';
+  document.querySelectorAll('style').forEach(s => { styles += s.outerHTML; });
+
+  // Collect Google Fonts link
+  let links = '';
+  document.querySelectorAll('link[rel="stylesheet"]').forEach(l => { links += l.outerHTML; });
+
+  const printWindow = window.open('', '_blank', 'width=900,height=700');
+  if (!printWindow) {
+    alert('Pop-up blocked! Please allow pop-ups for this page and try again.');
+    return;
+  }
+
+  printWindow.document.write(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>બોનાફાઈડ પ્રમાણપત્ર</title>
+${links}
+${styles}
+<style>
+  @page { size: ${cfg.page}; margin: 8mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #fff !important; display: flex; justify-content: center; padding: 0; }
+  .cert {
+    width: ${cfg.width};
+    max-width: ${cfg.width};
+    background: #fdf8ee !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .cert-border, .corner { display: block !important; }
+
+/* ══ LOCK SCREEN ══ */
+#lock-screen {
+  position: fixed; inset: 0; z-index: 99999;
+  background: linear-gradient(135deg, #0d1b4e 0%, #1a3480 45%, #0d2b1a 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'Cinzel', Arial, sans-serif;
+  gap: 0;
+}
+.lock-logo {
+  font-size: 80px; margin-bottom: 28px;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(201,148,42,0.5));
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+.lock-main-title {
+  font-family: 'Cinzel', serif;
+  font-size: 36px; font-weight: 900;
+  color: var(--gold-light);
+  letter-spacing: 4px;
+  text-shadow: 0 0 30px rgba(201,148,42,0.6), 0 4px 12px rgba(0,0,0,0.5);
+  margin-bottom: 10px;
+  animation: fadeUp .8s ease both;
+}
+.lock-sub-title {
+  font-size: 15px; font-weight: 400; letter-spacing: 6px;
+  color: rgba(180,200,240,0.6); margin-bottom: 44px;
+  animation: fadeUp 1s ease .2s both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.lock-btn {
+  padding: 16px 52px;
+  background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  color: var(--deep-blue); border: none; border-radius: 50px;
+  font-size: 18px; font-weight: 900; cursor: pointer;
+  letter-spacing: 2px; transition: all .25s;
+  box-shadow: 0 4px 24px rgba(201,148,42,0.5);
+  animation: fadeUp 1s ease .4s both;
+}
+.lock-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 36px rgba(201,148,42,0.65);
+}
+.lock-btn:active { transform: scale(0.97); }
+
+</style>
+</head>
+<body>
+<div class="cert" id="certificate">${certHTML}</div>
+<script>
+  window.onload = function() {
+    setTimeout(function() {
+      window.focus();
+      window.print();
+      setTimeout(function(){ window.close(); }, 1000);
+    }, 600);
+  };
+<\/script>
+`);
+  printWindow.document.close();
+}
+
+// ── PDF PIN ──────────────────────────────────────────────────────
+let _pinBuffer = '';
+let _pinTarget = null;
+
+function openPinForPDF(name) {
+  _pinTarget = name;
+  _pinBuffer = '';
+  updatePinDots();
+  const errEl = document.getElementById('pin-err');
+  if (errEl) errEl.textContent = '';
+  const nameEl = document.getElementById('pin-for-name');
+  if (nameEl) nameEl.textContent = '👤 ' + name;
+  const modal = document.getElementById('pinModal');
+  if (modal) modal.classList.add('open');
+}
+
+function closePinModal() {
+  const modal = document.getElementById('pinModal');
+  if (modal) modal.classList.remove('open');
+  _pinTarget = null;
+  _pinBuffer = '';
+  updatePinDots();
+}
+
+function pinPress(digit) {
+  if (_pinBuffer.length >= 4) return;
+  _pinBuffer += digit;
+  updatePinDots();
+  if (_pinBuffer.length === 4) setTimeout(checkPin, 150);
+}
+
+function pinBackspace() {
+  _pinBuffer = _pinBuffer.slice(0, -1);
+  updatePinDots();
+  const errEl = document.getElementById('pin-err');
+  if (errEl) errEl.textContent = '';
+}
+
+function pinClear() {
+  _pinBuffer = '';
+  updatePinDots();
+  const errEl = document.getElementById('pin-err');
+  if (errEl) errEl.textContent = '';
+}
+
+function updatePinDots() {
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById('pd' + i);
+    if (!dot) continue;
+    dot.classList.toggle('filled', i < _pinBuffer.length);
+    dot.classList.remove('error');
+  }
+}
+
+function checkPin() {
+  const records = getRecords();
+  // Find record - name might have been escaped, try both
+  let rec = records.find(function(r) { return r['std-name'] === _pinTarget; });
+  if (!rec) {
+    // Try unescaped version
+    const unescaped = _pinTarget.replace(/\\'/g, "'");
+    rec = records.find(function(r) { return r['std-name'] === unescaped; });
+  }
+
+  const correctCode = rec ? (rec['pdf-code'] || '') : '';
+
+  // If no pdf-code saved, allow any 4-digit entry (backward compat)
+  const isCorrect = correctCode
+    ? (_pinBuffer === correctCode)
+    : (_pinBuffer.length === 4);
+
+  if (isCorrect) {
+    closePinModal();
+    // Use correct unescaped name for PDF
+    const realName = rec ? rec['std-name'] : _pinTarget;
+    generatePDFFor(realName);
+  } else {
+    for (let i = 0; i < 4; i++) {
+      const dot = document.getElementById('pd' + i);
+      if (dot) { dot.classList.remove('filled'); dot.classList.add('error'); }
+    }
+    const errEl = document.getElementById('pin-err');
+    if (errEl) {
+      errEl.textContent = correctCode
+        ? '❌ ખોટો PIN! ફરી પ્રયાસ કરો.'
+        : '❌ PIN મળ્યો નહીં. record ફરી save કરો.';
+    }
+    setTimeout(function() { _pinBuffer = ''; updatePinDots(); }, 900);
+  }
+}
+// ──────────────────────────────────────────────────────────────────
+
+
+// REQUIRED fields for validation
+const REQUIRED_FIELDS = ['school-name','school-mun','school-ta','school-ji','school-dias',
+  'year','dhoran','std-name','dob','dob-words','vay-no','jati','village','pdf-code'];
+
+function sanitizeDias() {
+  const el = document.getElementById('school-dias');
+  if (!el) return;
+  // allow only digits, max 11
+  el.value = el.value.replace(/\D/g,'').slice(0,11);
+}
+
+function checkFormComplete() {
+  const allFilled = REQUIRED_FIELDS.every(id => {
+    const el = document.getElementById(id);
+    return el && el.value.trim().length > 0;
+  });
+  const diasOk = (document.getElementById('school-dias')?.value||'').length === 11;
+  const ok = allFilled && diasOk;
+
+  const btnGen  = document.getElementById('btn-gen');
+  const btnSave = document.getElementById('btn-save');
+  if (btnGen)  btnGen.disabled  = !ok;
+  if (btnSave) btnSave.disabled = !ok;
+}
+
+function newEntry() {
+  _recordSaved = false;
+  // Clear student fields only (keep school info)
+  ['jano','year','dhoran','std-name','dob','dob-words','vay-no','jati','village','sthad','date'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = id === 'year' ? "2024-\'25" : '';
+  });
+  photoDataUrl = null;
+  const pa = document.getElementById('photo-area');
+  if (pa) pa.innerHTML = '<span style="font-size:28px;z-index:1;">📷</span><span style="font-size:11px;color:#999;z-index:1;text-align:center;">ફોટો<br>ક્લિક કરો</span>';
+
+  // Show action buttons, hide new entry
+  document.getElementById('action-btns').style.display = 'flex';
+  document.getElementById('btn-new-entry').style.display = 'none';
+
+  liveUpdate();
+  checkFormComplete();
+  showToast('✅ નવી એન્ટ્રી માટે ફોર્મ તૈયાર!');
+  // Go to form tab
+  showTab('form-page', document.querySelectorAll('.tab')[0]);
+}
+
+// ── SAVE / LOAD ──────────────────────────────────────────────────
+const STORE_KEY = 'bonafide_records';
+
+function getRecords() {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function putRecords(arr) {
+  localStorage.setItem(STORE_KEY, JSON.stringify(arr));
+}
+
+const FIELDS = ['school-name','school-mun','school-ta','school-ji','school-dias',
+  'jano','year','dhoran','std-name','dob','dob-words','vay-no','jati','village','sthad','date','pdf-code'];
+
+function saveRecord() {
+  const name = g('std-name');
+  if (!name) { showToast('⚠️ નામ ભરો', true); return; }
+  const data = {};
+  FIELDS.forEach(id => { data[id] = g(id); });
+  data._photo = photoDataUrl || null;
+  data._savedAt = new Date().toLocaleString('gu-IN');
+
+  const records = getRecords();
+  const idx = records.findIndex(r => r['std-name'] === name);
+
+  if (idx >= 0) {
+    // keep existing jano on update
+    data['jano'] = records[idx]['jano'] || data['jano'];
+    records[idx] = data;
+  } else {
+    // auto-assign next jano if not manually filled
+    if (!data['jano']) {
+      const maxNo = records.reduce((max, r) => {
+        const n = parseInt(r['jano']) || 0;
+        return n > max ? n : max;
+      }, 0);
+      data['jano'] = String(maxNo + 1);
+      const janoEl = document.getElementById('jano');
+      if (janoEl) { janoEl.value = data['jano']; liveUpdate(); }
+    }
+    records.push(data);
+  }
+
+  putRecords(records);
+  renderSavedList();
+  renderListPage();
+  _recordSaved = true;
+  showToast('✅ ' + name + ' — સાચવાઈ ગઈ!  (જા.નં. ' + data['jano'] + ')');
+  // Lock form — show New Entry button
+  document.getElementById('action-btns').style.display = 'none';
+  document.getElementById('btn-new-entry').style.display = 'block';
+}
+
+function loadRecord(name) {
+  const records = getRecords();
+  const data = records.find(r => r['std-name'] === name);
+  if (!data) return;
+  FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = data[id] || '';
+  });
+  if (data._photo) {
+    photoDataUrl = data._photo;
+    document.getElementById('photo-area').innerHTML =
+      `<img src="${data._photo}"><div class="overlay">બદલો</div>`;
+  }
+  liveUpdate();
+  showToast('📂 ' + name + ' — લોડ થઈ!');
+}
+
+function deleteRecord(name, e) {
+  e.stopPropagation();
+  if (!confirm('"' + name + '" ને ડિલીટ કરવો?')) return;
+  const records = getRecords().filter(r => r['std-name'] !== name);
+  putRecords(records);
+  renderSavedList();
+  renderListPage();
+  showToast('🗑️ ' + name + ' — ડિલીટ થઈ!');
+}
+
+function renderSavedList() {
+  renderListPage();
+}
+
+function showToast(msg, isError=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Load saved list on startup
+// DOMContentLoaded handled in lock screen JS
+// ──────────────────────────────────────────────────────────────────
+
+
+// ── COLUMN DEFINITIONS ─────────────────────────────────────────
+const COL_DEFS = [
+  { key: 'jano',        label: 'જા.નં.',          style: 'text-align:center;font-weight:900;color:var(--royal-blue);font-size:15px;' },
+  { key: 'std-name',    label: 'વિદ્યાર્થીનું નામ', style: 'font-weight:800;color:var(--deep-blue);' },
+  { key: 'dhoran',      label: 'ધો.',               style: 'text-align:center;font-weight:800;' },
+  { key: 'dob',         label: 'જન્મ તારીખ',        style: 'font-size:12.5px;' },
+  { key: 'dob-words',   label: 'જ.તા. (શબ્દોમાં)',   style: 'font-size:12px;color:#555;' },
+  { key: 'vay-no',      label: 'વ.પ.નં.',           style: 'text-align:center;font-weight:700;' },
+  { key: 'jati',        label: 'જ્ઞાતિ',            style: 'font-size:12.5px;' },
+  { key: 'village',     label: 'ગામ',               style: 'font-size:12.5px;color:var(--green);' },
+  { key: 'school-name', label: 'શાળા',              style: 'font-size:12px;color:var(--green);' },
+  { key: 'school-dias', label: 'ડાયસ',              style: 'font-size:12px;color:#888;' },
+  { key: 'pdf-code',    label: 'PDF PIN',           style: 'text-align:center;font-weight:800;letter-spacing:3px;font-family:monospace;', masked: true },
+];
+
+function buildTableHeader() {
+  const thead = document.getElementById('list-thead');
+  if (!thead) return;
+  thead.innerHTML = `<tr>
+    <th style="min-width:44px;text-align:center;">ક્રમ</th>
+    ${COL_DEFS.map(c => `<th style="min-width:90px;white-space:nowrap;">${c.label}</th>`).join('')}
+    <th style="min-width:105px;">Action</th>
+  </tr>`;
+}
+
+function renderListPage() {
+  buildTableHeader();
+  const records = getRecords();
+  const tbody   = document.getElementById('list-tbody');
+  const countEl = document.getElementById('list-count');
+  if (!tbody) return;
+  if (countEl) countEl.textContent = records.length + ' નોંધ';
+  renderAllRows(records);
+}
+
+function renderAllRows(records) {
+  const tbody = document.getElementById('list-tbody');
+  if (!tbody) return;
+  const cols = COL_DEFS.length + 2; // serial + cols + action
+
+  if (!records.length) {
+    tbody.innerHTML = `<tr id="live-tr"></tr>
+      <tr><td colspan="${cols}" class="list-empty">
+        <span class="empty-icon">📭</span>હજી કોઈ નોંધ સાચવેલ નથી
+      </td></tr>`;
+    refreshLiveRow();
+    return;
+  }
+
+  tbody.innerHTML = records.map((r, i) => {
+    const name = (r['std-name'] || '').replace(/'/g, "\\'");
+    const cells = COL_DEFS.map(c => {
+      let val = r[c.key] || '';
+      if (c.masked && val.length === 4) {
+        val = '●●' + val.slice(2); // first 2 hidden, last 2 visible
+      }
+      return `<td style="${c.style}">${val}</td>`;
+    }).join('');
+    return `<tr class="saved-tr">
+      <td class="tbl-no">${i + 1}</td>
+      ${cells}
+      <td>
+        <div class="tbl-btns">
+          <button class="btn-tbl-pdf"  onclick="openPinForPDF(getRecords()[${i}]['std-name'])" title="PDF">📄 PDF</button>
+          <button class="btn-tbl-del"  onclick="deleteRecord(getRecords()[${i}]['std-name'], event)" title="ડિલીટ">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('') + `<tr id="live-tr"></tr>`;
+
+  refreshLiveRow();
+}
+
+// Live row — updates as form is typed, shown at bottom of table
+function refreshLiveRow() {
+  const tr = document.getElementById('live-tr');
+  if (!tr) return;
+
+  const vals = COL_DEFS.map(c => g(c.key));
+  const hasAny = vals.some(v => v);
+
+  if (!hasAny) { tr.innerHTML = ''; return; }
+
+  const nextNo = getRecords().length + 1;
+  tr.innerHTML = `
+    <td class="tbl-no" style="background:rgba(201,148,42,0.12);color:var(--gold-dark);font-style:italic;">${nextNo}*</td>
+    ${COL_DEFS.map((c, i) => {
+      const val = vals[i];
+      return `<td style="${c.style} background:rgba(201,148,42,0.06);">
+        ${val
+          ? `<span style="border-bottom:2px dotted var(--gold);padding-bottom:1px;">${val}</span>`
+          : `<span style="color:#ccc;font-style:italic;font-size:11px;">—</span>`
+        }
+      </td>`;
+    }).join('')}
+    <td style="background:rgba(201,148,42,0.06);">
+      <span style="font-size:11px;color:var(--gold-dark);font-weight:800;font-style:italic;">✍️ ભરાઈ રહ્યું છે...</span>
+    </td>`;
+}
+
+function updateLiveStrip() {
+  // refresh live row in table whenever form input changes
+  refreshLiveRow();
+}
+
+function loadAndView(name) {
+  loadRecord(name);
+  // Go to form page for editing
+  _recordSaved = true; // already saved — allow cert view
+  const formTab = document.querySelectorAll('.tab')[0];
+  showTab('form-page', formTab);
+  // Show action buttons, hide new entry
+  const ab = document.getElementById('action-btns');
+  const nb = document.getElementById('btn-new-entry');
+  if (ab) ab.style.display = 'flex';
+  if (nb) nb.style.display = 'none';
+  checkFormComplete();
+  showToast('✏️ ફેરફાર કરીને ફરી 💾 સાચવો');
+}
+
+function clearAllRecords() {
+  if (!confirm('બધી ' + getRecords().length + ' નોંધ ડિલીટ કરવી?')) return;
+  localStorage.removeItem(STORE_KEY);
+  renderSavedList();
+  renderListPage();
+  showToast('🗑️ બધી નોંધ ડિલીટ થઈ!');
+}
+
+function generatePDFFor(name) {
+  const records = getRecords();
+  const data = records.find(function(r) { return r['std-name'] === name; });
+  if (!data) { showToast('⚠️ રેકોર્ડ મળ્યો નહીં', true); return; }
+
+  // Build cert HTML directly from data (no form fill/liveUpdate)
+  const certEl = document.getElementById('certificate');
+  if (!certEl) { showToast('⚠️ Certificate element નથી', true); return; }
+
+  // Temporarily fill cert spans directly
+  const mapping = {
+    'c-school-name': data['school-name'] || '',
+    'c-school-addr': (data['school-mun']||'') + ', ' + (data['school-ta']||'') + ', ' + (data['school-ji']||''),
+    'c-dias': '◆  ડાયસ કોડ : ' + (data['school-dias']||'') + '  ◆',
+    'c-jano':   data['jano'] || '',
+    'c-name1':  data['std-name'] || '',
+    'c-year1':  data['year'] || '',
+    'c-dhoran1':data['dhoran'] || '',
+    'c-name':   data['std-name'] || '',
+    'c-dob':    data['dob'] || '',
+    'c-dobw':   data['dob-words'] || '',
+    'c-vay':    data['vay-no'] || '',
+    'c-jati':   data['jati'] || '',
+    'c-village':data['village'] || '',
+    'c-sthad':  data['sthad'] || '',
+    'c-date':   data['date'] || '_____ / _____ / _____'
+  };
+
+  // Save current cert values
+  const saved = {};
+  Object.keys(mapping).forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) { saved[id] = el.textContent; el.textContent = mapping[id]; }
+  });
+
+  // Handle photo
+  const photoBox = document.getElementById('c-photo-box');
+  const savedPhotoHTML = photoBox ? photoBox.innerHTML : '';
+  if (photoBox && data._photo) {
+    photoBox.innerHTML = '<img src="' + data._photo + '" style="width:100%;height:100%;object-fit:cover;">';
+  }
+
+  const certHTML = certEl.innerHTML;
+
+  // Restore cert values
+  Object.keys(mapping).forEach(function(id) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = saved[id] || '';
+  });
+  if (photoBox) photoBox.innerHTML = savedPhotoHTML;
+
+  // Build print window
+  const links = Array.from(document.querySelectorAll('link[rel="stylesheet"]'))
+                     .map(function(l) { return l.outerHTML; }).join('');
+  const firstStyle = document.querySelector('style');
+  const certStyles = firstStyle ? firstStyle.innerHTML : '';
+  const cfg = sizeConfig[currentSize];
+
+  const pw = window.open('', '_blank', 'width=900,height=700');
+  if (!pw) { showToast('⚠️ Pop-up allow કરો', true); return; }
+
+  pw.document.write(
+    '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'
+    + name + ' — બોનાફાઈડ</title>'
+    + links
+    + '<style>'
+    + certStyles
+    + '@page{size:' + cfg.page + ';margin:8mm;}'
+    + '*{box-sizing:border-box;margin:0;padding:0;}'
+    + 'body{background:#fff!important;display:flex;justify-content:center;padding:0;}'
+    + '#lock-screen{display:none!important;}'
+    + '.pin-overlay{display:none!important;}'
+    + '.modal-overlay{display:none!important;}'
+    + '.cert{width:' + cfg.width + ';max-width:' + cfg.width + ';background:#fdf8ee!important;box-shadow:none!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;min-height:100vh;display:flex;flex-direction:column;}'
+    + '.cert-inner{display:flex;flex-direction:column;flex:1;}'
+    + '.cert-body{flex:1;}'
+    + '.footer-gold{margin-top:auto;}'
+    + '.cert-footer{padding-bottom:10px;}'
+    + '</style></head><body>'
+    + '<div class="cert" id="certificate">' + certHTML + '</div>'
+    + '<scr' + 'ipt>window.onload=function(){setTimeout(function(){window.focus();window.print();setTimeout(function(){window.close();},1500);},600);};<\/scr' + 'ipt>'
+    + '</body></html>'
+  );
+  pw.document.close();
+  showToast('📄 ' + name + ' — PDF Print ખૂલ્યું!');
+}
+
+
+
+
+// ── ADMIN DELETE ─────────────────────────────────────────────────
+const ADMIN_PASS = 'Somo@2009';
+let _pendingDeleteName = null;
+
+function deleteRecord(name, e) {
+  if (e) e.stopPropagation();
+  _pendingDeleteName = name;
+  document.getElementById('modal-del-name').textContent = '👤 ' + name;
+  document.getElementById('admin-pass-input').value = '';
+  document.getElementById('modal-err').style.display = 'none';
+  document.getElementById('adminModal').classList.add('open');
+  setTimeout(() => document.getElementById('admin-pass-input').focus(), 100);
+}
+
+function closeAdminModal() {
+  document.getElementById('adminModal').classList.remove('open');
+  _pendingDeleteName = null;
+}
+
+function togglePassView() {
+  const inp = document.getElementById('admin-pass-input');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+}
+
+function confirmAdminDelete() {
+  const pass = document.getElementById('admin-pass-input').value;
+  if (pass !== getAdminPass()) {
+    document.getElementById('modal-err').style.display = 'block';
+    document.getElementById('admin-pass-input').value = '';
+    document.getElementById('admin-pass-input').focus();
+    return;
+  }
+  // Password correct — delete
+  const name = _pendingDeleteName;
+  closeAdminModal();
+  const records = getRecords().filter(r => r['std-name'] !== name);
+  putRecords(records);
+  renderSavedList();
+  renderListPage();
+  showToast('🗑️ ' + name + ' — ડિલીટ થઈ!');
+}
+// ──────────────────────────────────────────────────────────────────
+
+
+// ── CHANGE PASSWORD ───────────────────────────────────────────────
+const PASS_KEY = 'bonafide_admin_pass';
+
+function getAdminPass() {
+  return localStorage.getItem(PASS_KEY) || ADMIN_PASS;
+}
+
+function openChangePass() {
+  ['cp-current','cp-new','cp-confirm'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) { el.value=''; el.classList.remove('error'); }
+  });
+  ['cp-curr-err','cp-match-err'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+  const ok = document.getElementById('cp-match-ok');
+  if(ok) ok.style.display='none';
+  const fill = document.getElementById('str-fill');
+  if(fill) { fill.style.width='0%'; }
+  const lbl = document.getElementById('str-label');
+  if(lbl) lbl.textContent='';
+  document.getElementById('chpassModal').classList.add('open');
+  setTimeout(()=>document.getElementById('cp-current').focus(),100);
+}
+
+function closeChangePass() {
+  document.getElementById('chpassModal').classList.remove('open');
+}
+
+function toggleCP(id) {
+  const el = document.getElementById(id);
+  if(el) el.type = el.type==='password' ? 'text' : 'password';
+}
+
+function checkStrength() {
+  const pass = document.getElementById('cp-new').value;
+  const fill = document.getElementById('str-fill');
+  const lbl  = document.getElementById('str-label');
+  if(!fill||!lbl) return;
+  let score=0;
+  if(pass.length>=6) score++;
+  if(pass.length>=10) score++;
+  if(/[A-Z]/.test(pass)||/[a-z]/.test(pass)) score++;
+  if(/[0-9]/.test(pass)) score++;
+  if(/[^A-Za-z0-9]/.test(pass)) score++;
+  const levels=[
+    {w:'0%',  bg:'#eee',    t:''},
+    {w:'25%', bg:'#f44336', t:'🔴 નબળો'},
+    {w:'50%', bg:'#FF9800', t:'🟠 સામાન્ય'},
+    {w:'75%', bg:'#2196F3', t:'🔵 સારો'},
+    {w:'100%',bg:'#4CAF50', t:'🟢 મજબૂત'},
+  ];
+  const lv=levels[Math.min(score,4)];
+  fill.style.width=lv.w; fill.style.background=lv.bg;
+  lbl.textContent=lv.t;
+
+  // Check confirm match
+  const conf=document.getElementById('cp-confirm').value;
+  if(conf) checkConfirmMatch();
+}
+
+function checkConfirmMatch() {
+  const nw=document.getElementById('cp-new').value;
+  const cf=document.getElementById('cp-confirm').value;
+  const errEl=document.getElementById('cp-match-err');
+  const okEl =document.getElementById('cp-match-ok');
+  if(!cf) { errEl.style.display='none'; okEl.style.display='none'; return; }
+  if(nw===cf) { errEl.style.display='none'; okEl.style.display='block'; }
+  else        { errEl.style.display='block'; okEl.style.display='none'; }
+}
+
+function saveNewPass() {
+  const curr   = document.getElementById('cp-current').value;
+  const newP   = document.getElementById('cp-new').value;
+  const confP  = document.getElementById('cp-confirm').value;
+  const currErr= document.getElementById('cp-curr-err');
+  const matchErr=document.getElementById('cp-match-err');
+
+  // Validate current
+  if(curr !== getAdminPass()) {
+    currErr.style.display='block';
+    document.getElementById('cp-current').classList.add('error');
+    return;
+  }
+  currErr.style.display='none';
+  document.getElementById('cp-current').classList.remove('error');
+
+  // Validate new
+  if(newP.length < 4) { showToast('⚠️ ઓછામાં ઓછા 4 અક્ષર જોઈએ', true); return; }
+  if(newP !== confP)  { matchErr.style.display='block'; return; }
+
+  localStorage.setItem(PASS_KEY, newP);
+  closeChangePass();
+  showToast('✅ Admin પાસવર્ડ સફળતાપૂર્વક બદલાયો!');
+}
+// ──────────────────────────────────────────────────────────────────
+
+
+// ── LOCK SCREEN ───────────────────────────────────────────────────
+const LOCK_SESSION_KEY = 'bonafide_unlocked';
+
+
+
+function unlockApp() {
+  sessionStorage.setItem(LOCK_SESSION_KEY, '1');
+  const ls = document.getElementById('lock-screen');
+  ls.style.transition = 'opacity .5s';
+  ls.style.opacity = '0';
+  setTimeout(() => {
+    ls.style.display = 'none';
+    showMainApp();
+  }, 500);
+}
+
+function showMainApp() {
+  // Show navbar and tabs
+  document.getElementById('main-app').style.display = '';
+  document.querySelectorAll('.navbar, .tabs').forEach(el => {
+    el.style.display = '';
+  });
+  // Show only active section
+  document.querySelectorAll('.section').forEach(s => {
+    s.style.display = s.classList.contains('active') ? 'block' : 'none';
+  });
+  buildTableHeader();
+  renderSavedList();
+  renderListPage();
+  liveUpdate();
+  checkFormComplete();
+}
+
+// Check session on load
+window.addEventListener('DOMContentLoaded', function() {
+  if (sessionStorage.getItem(LOCK_SESSION_KEY) === '1') {
+    document.getElementById('lock-screen').style.display = 'none';
+    showMainApp();
+  } else {
+    // Hide main app elements until unlocked
+    document.querySelectorAll('.navbar, .tabs, .section').forEach(el => {
+      el.style.display = 'none';
+    });
+    // no password input on lock screen
+  }
+  buildTableHeader(); renderSavedList(); renderListPage();
+});
+// ──────────────────────────────────────────────────────────────────
+
+
+</script>
